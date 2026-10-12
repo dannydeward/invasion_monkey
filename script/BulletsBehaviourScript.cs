@@ -1,45 +1,68 @@
+//Danny Ramirez
+//ramdannygmnail.com
+// este script controla la bala del jugador, el daño que causa, su velocidad, la autodestrucicon y y las explosiones al colicionar con el enemigo o con balas enemigas
+
+
 using UnityEngine;
 
 public class BulletsBehaviourScript : MonoBehaviour
 {
+    [SerializeField] float _BulletSpeed = 10f;
+    [SerializeField] float damage = 10f;
+    [SerializeField] float capitanDamage = 5f; 
+    [SerializeField] GameObject explosionPrefab;
 
-[SerializeField] float _BulletSpeed= 10f;
-[SerializeField] float damage= 10f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Destroy(gameObject,1f);
+        Destroy(gameObject, 2f); 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector3(0f,1f,0f)*Time.deltaTime * _BulletSpeed);
+        transform.Translate(new Vector3(0f, 1f, 0f) * Time.deltaTime * _BulletSpeed);
     }
-
-
 
     private void OnCollisionEnter2D(Collision2D collision)
-{
-    if(collision.gameObject.CompareTag("Enemies"))
-
     {
-    Debug.Log(" Bullet hit  an Enemy!");
-    EnimyHeart EnimyHeart= collision.gameObject.GetComponent<EnimyHeart>();
+        // Si choca con una bala enemiga, explotar ambas
+        if (collision.gameObject.CompareTag("BulletEnemy"))
+        {
+            if (explosionPrefab != null)
+            {
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            }
+            Destroy(collision.gameObject); // Destruir la bala enemiga
+            Destroy(gameObject); // Destruir esta bala
+            return;
+        }
 
-     if(EnimyHeart != null)
-    {
+        // Si NO es un enemigo ni una bala enemiga, ignorar
+        if (!collision.gameObject.CompareTag("Enemies"))
+        {
+            return; 
+        }
 
-        EnimyHeart.TakeDamage(damage);
-       
+        // Si tocó un enemigo
+        Debug.Log("Bullet hit an Enemy!");
+        
+        EnimyHeart EnimyHeart = collision.gameObject.GetComponent<EnimyHeart>();
+        if (EnimyHeart != null)
+        {
+            EnimyHeart.TakeDamage(damage);
+        }
+        else
+        {
+            EnimyHeart enemyHeart = collision.gameObject.GetComponent<EnimyHeart>();
+            if (EnimyHeart != null)
+            {
+                EnimyHeart.TakeDamage(capitanDamage);
+            }
+        }
 
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
-    }
-
-    Destroy(gameObject);
-
-    }
-
-
 }

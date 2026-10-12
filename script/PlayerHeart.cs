@@ -1,7 +1,12 @@
-// creado por danny ramirez, aqui definimos la vida del jugador
+//Danny Ramirez
+//ramdanny@gmail.com
+// con este escrip manejamos la vida del jugador , su tres vidas, su renacimiento . tiempo d einvulnerabilidad,
+
+
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerHeart : MonoBehaviour
 {
@@ -11,14 +16,16 @@ public class PlayerHeart : MonoBehaviour
     private int currentHealth;
 
     [Header("Reaparición")]
-    [SerializeField] private Transform playerRoot;      // Arrastrar el GameObject "Player" (padre)
-    [SerializeField] private float invulnerabilityTime = 1f; // Tiempo de inmunidad tras recibir un golpe
+    [SerializeField] private Transform playerRoot;
+    [SerializeField] private float invulnerabilityTime = 1f;
+
+    [Header("UI de Vidas")] 
+    [SerializeField] private LifeUI lifeUI;
 
     private bool isInvulnerable = false;
 
     private void Awake()
     {
-        // Si no asignaste el playerRoot en el inspector, toma el transform raíz
         if (playerRoot == null)
         {
             playerRoot = transform.root;
@@ -28,6 +35,12 @@ public class PlayerHeart : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        
+        // <-- NUEVO: Inicializar los iconos al empezar la escena
+        if (lifeUI != null)
+        {
+            lifeUI.ActualizarVidas(lives);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -39,10 +52,9 @@ public class PlayerHeart : MonoBehaviour
             EnimyHeart enemy = collision.gameObject.GetComponent<EnimyHeart>();
             if (enemy != null)
             {
-                enemy.TakeDamage(999f); // El enemigo también muere en el choque directo
+                enemy.TakeDamage(999f);
             }
-
-            TakeHit(25); // Daño directo por chocar contra la nave enemiga
+            TakeHit(25);
         }
     }
 
@@ -56,33 +68,52 @@ public class PlayerHeart : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            LoseLife(); // En lugar de ir directo a GameOver, pierde una vida
+            LoseLife();
         }
         else
         {
-            // Opcional: invulnerabilidad breve tras recibir un disparo para no recibir ráfagas seguidas
             StartCoroutine(InvulnerabilityRoutine());
         }
     }
 
-    private void LoseLife()
+      public void LoseLife()
+{
+    lives--;
+    Debug.Log("Vidas restantes: " + lives);
+    
+    if (lifeUI != null)
     {
-        lives--;
-        Debug.Log("Vidas restantes: " + lives);
+        lifeUI.ActualizarVidas(lives);
+    }
 
-        if (lives <= 0)
+    if (lives <= 0)
+    {
+        Debug.Log("GAME OVER - Deteniendo enemigos...");
+        
+    
+        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+        if (spawner != null)
         {
-            GameOver();
+            spawner.enabled = false;
+        }
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.GameOver();
         }
         else
         {
-            Respawn();
+            SceneManager.LoadScene("Gameover");
         }
     }
+    else
+    {
+        Respawn();
+    }
+}
 
     private void Respawn()
     {
-        // Se mantiene en la posición actual donde murió y solo restaura la salud
         currentHealth = maxHealth; 
         StartCoroutine(InvulnerabilityRoutine());
     }
@@ -97,6 +128,6 @@ public class PlayerHeart : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GAME OVER");
-        Time.timeScale = 0f; // Pausa el juego
+        Time.timeScale = 0f;
     }
 }

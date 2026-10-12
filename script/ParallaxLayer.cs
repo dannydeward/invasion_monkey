@@ -1,3 +1,7 @@
+//Danny Ramirez
+//ramdanny@gmail.com
+//desde aqui manejamos loop de l escenario para que las pantallas se repitan 
+
 using UnityEngine;
 
 public class LoopingBackground : MonoBehaviour

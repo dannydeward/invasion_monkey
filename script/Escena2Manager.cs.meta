@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5bc72f0a6c1e97b40b77ae4d229f8b85
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - monkeyPrefab: {instanceID: 0}
+  - capitanPrefab: {instanceID: 0}
+  - powerUpNuevaArma: {fileID: 3250767222136216840, guid: 8aafa72b5157d064bbe13747f5ec8d8c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

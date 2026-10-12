@@ -1,9 +1,16 @@
+//Danny Ramirez 
+//ramdanny@gmail.com
+// este scrip tiene como funcion dirigir las balas del enemigo, tiene la velocidad, el daño y y las explosiones al colicionar con balas del jugador y con el jugador, ademas la autodestruye una vez que pasa de largo 
+
+
+
 using UnityEngine;
 
 public class BulletEnemyBehaviour : MonoBehaviour
 {
-    [SerializeField] private float _bulletSpeed = 3f;
-    [SerializeField] private int _damage = 3; // Variable de daño que verás en el Inspector
+    [SerializeField] float speed = 5f;
+    [SerializeField] float damage = 10f;
+    [SerializeField] GameObject explosionPrefab;
 
     void Start()
     {
@@ -12,19 +19,40 @@ public class BulletEnemyBehaviour : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.down * _bulletSpeed * Time.deltaTime);
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+       
+        if (collision.gameObject.CompareTag("Bullet"))
         {
-            PlayerHeart playerHeart = collision.gameObject.GetComponent<PlayerHeart>();
-            if (playerHeart != null)
+            if (explosionPrefab != null)
             {
-                playerHeart.TakeHit(_damage); // Enviamos el daño exacto de esta bala
+                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             }
-            Destroy(gameObject);
+            Destroy(collision.gameObject); // Destruir la bala del jugador
+            Destroy(gameObject); // Destruir esta bala enemiga
+            return;
         }
+
+      
+        if (!collision.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+
+      
+        PlayerHeart playerHeart = collision.gameObject.GetComponent<PlayerHeart>();
+        if (playerHeart != null)
+        {
+            playerHeart.TakeHit((int)damage);
+        }
+
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
 }
