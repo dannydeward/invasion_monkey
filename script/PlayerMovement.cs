@@ -1,34 +1,34 @@
 
 /** autor: danny Ramirez 
    e-mail : ramdanny@gmail.com
-   @desc[estoy haciendo el scritp para movimiento de la nave]*/
+   aqui  tenemos el scrip que maneja todos lo movimientos de perruelo y le damos limite a la pantalla**/
 
 using UnityEngine;
 
-public class playermoved : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]  float _speed = 5f;
-    float _vert= 0f;
-     float _hor = 0f;
+    [SerializeField] float _speed = 5f;
+    [Header("Límites de la pantalla")]
+    [SerializeField] float _minX = -4f;
+    [SerializeField] float _maxX = 4f;
+    [SerializeField] float _minY = -5f;
+    [SerializeField] float _maxY = 5f;
 
-     Vector2  _move;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
-     
     {
-        _vert = Input.GetAxis("Vertical");
-        _hor=  Input.GetAxis("Horizontal");
+        float vert = Input.GetAxis("Vertical");
+        float hor = Input.GetAxis("Horizontal");
+        
+        Vector2 move = new Vector2(hor, vert).normalized;
+        
+        // Movemos al jugador
+        transform.Translate(move * Time.deltaTime * _speed);
 
-  _move= new Vector2(_hor, _vert);
-  _move=_move.normalized; 
-        transform.Translate(new Vector3(_move.x, _move.y, 0f) * Time.deltaTime * _speed);
+        // Evitamos que Perruelo se salga de la pantalla
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, _minX, _maxX);
+        pos.y = Mathf.Clamp(pos.y, _minY, _maxY);
+        transform.position = pos;
     }
 }
 

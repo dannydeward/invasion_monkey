@@ -1,3 +1,7 @@
+//Danny Ramirez
+//ramdanny@gmail.com
+/** dese aqui le damo movimiento al power up para que caiga despacio por la pantalal y pueda ser tomado por el jugador**/
+
 using UnityEngine;
 
 public class PowerUpMovement : MonoBehaviour

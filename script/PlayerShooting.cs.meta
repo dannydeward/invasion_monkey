@@ -1,2 +1,19 @@
 fileFormatVersion: 2
 guid: 841852ce4de825c42926d333b26f8858
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _nozzle: {fileID: 3044519326766571751, guid: b2a3253583df0c8419b2b4cde94ff62d, type: 3}
+  - _bulletPrefab: {fileID: 8486541634159303430, guid: 6e9e10bdadaf4e6409d7d6fdc8f977b3, type: 3}
+  - _nozzleIzquierdo: {fileID: 7906523112045930597, guid: 18d292ef14d94b942919aa18d02e2d7e, type: 3}
+  - _nozzleDerecho: {fileID: 4996594948821490459, guid: b0cf289cda0cf8746b34a94c87faabba, type: 3}
+  - arma1: {fileID: 6034839472701522553, guid: 90f80fc9c94c34b40b816a776c45c25e, type: 3}
+  - arma2: {fileID: 3529264758642085277, guid: a30b0fbc9af89ff4f8d3957bc38b718f, type: 3}
+  - arma3: {fileID: 6854994393100209744, guid: 927ea33e4aa69f34ea668ddac55e29c0, type: 3}
+  - bulletPrefabNuevaArma: {fileID: 8486541634159303430, guid: 84ca102a9a1c5654fa22f175715a6f62, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

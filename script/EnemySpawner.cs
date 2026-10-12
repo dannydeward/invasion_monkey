@@ -1,3 +1,10 @@
+//Danny Ramirez
+//ramdanny@gmail.com
+//este script controla toda la escena 1  genera las oleadas de enemigos, informa al Gamemanager cuando la escena termino 
+// para invoque la escena 2 o llame a game over, tambien asigna el powerup de forma aleatoria aun enemigo en la ultima oleada 
+
+
+
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -34,19 +41,43 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void SpawnWave(int amount)
+       void SpawnWave(int amount)
     {
+        bool esUltimaOleada = (currentWaveIndex == waveSizes.Length - 1);
+        int indiceGanador = -1;
+        
+        if (esUltimaOleada) {
+            indiceGanador = Random.Range(0, amount);
+        }
+
         for (int i = 0; i < amount; i++)
         {
             float randomX = Random.Range(minX, maxX);
             Vector3 spawnPos = new Vector3(randomX, spawnY, 0f);
-            Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            
+         
+            GameObject nuevoEnemigo = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+
+           
+            if (esUltimaOleada && i == indiceGanador) {
+                EnimyHeart corazon = nuevoEnemigo.GetComponent<EnimyHeart>();
+                if (corazon != null) {
+                    corazon.esElElegido = true;
+                }
+            }
         }
     }
 
-    void LevelWon()
+   void LevelWon()
     {
         Debug.Log("¡Nivel completado! Ganaste.");
-        // Acá después podés poner: pantalla de victoria, cargar siguiente escena, etc.
+        enabled = false; 
+        // Avisar al GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.NivelCompletado();
+        }
     }
 }
+
+
