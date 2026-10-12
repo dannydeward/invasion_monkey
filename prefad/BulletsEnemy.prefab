@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6415632615342400198}
   m_Layer: 0
   m_Name: BulletsEnemy
-  m_TagString: Untagged
+  m_TagString: BulletEnemy
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -179,5 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32995d96bed02b24ebc8b7054838f11a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletsEnemy
-  _bulletSpeed: 3
-  _damage: 2
+  speed: 5
+  damage: 10
+  explosionPrefab: {fileID: 6416278708438682058, guid: aa23c92e7d3c7af43adbb752274092f0, type: 3}

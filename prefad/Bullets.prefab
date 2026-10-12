@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6587888274139994761}
   m_Layer: 0
   m_Name: Bullets
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8486541634159303430}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.023, y: -3.049, z: 0}
-  m_LocalScale: {x: 0.13736716, y: 0.3085411, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.07, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,8 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38157c3c2ff1d9a4cb2fc8767bfffc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletsBehaviourScript
-  _BulletSpeed: 10
-  damage: 10
+  _BulletSpeed: 3
+  damage: 5
+  capitanDamage: 3
+  explosionPrefab: {fileID: 6416278708438682058, guid: aa23c92e7d3c7af43adbb752274092f0, type: 3}
 --- !u!50 &-2909261104039862782
 Rigidbody2D:
   serializedVersion: 5
@@ -116,7 +118,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8486541634159303430}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
